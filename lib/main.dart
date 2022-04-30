@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:jzclean/landingpage.dart';
-import 'package:jzclean/loginpage.dart';
-import './user.dart';
-import './admin.dart';
+import 'package:jzclean/screens/landingpage.dart';
+import 'package:jzclean/screens/loginpage.dart';
+import 'screens/user_folder/user.dart';
+import 'screens/admin_folder/admin.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 void main() {
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
             child: landingpage()),
       ),
       routes: {
-        '/user': (ctx) => user(),
+        '/user': (ctx) => user_page(),
         '/admin': (ctx) => admin(),
         '/loginpage': (ctx) => loginpage(),
       },

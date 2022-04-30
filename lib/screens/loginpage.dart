@@ -12,9 +12,7 @@ class _loginpageState extends State<loginpage> {
   String dropdownValue = 'Select login type';
   TextEditingController idcontroller = new TextEditingController();
   TextEditingController passcontroller = new TextEditingController();
-  Future<bool> verify_signin() async {
-    if (dropdownValue == 'admin')
-      return idcontroller.text == '11111' && passcontroller.text == 'password';
+  Future verify_signin(BuildContext ctx) async {
     final url =
         Uri.parse("http://austrian-expert.000webhostapp.com/verifylogin.php");
     var data = {
@@ -23,25 +21,37 @@ class _loginpageState extends State<loginpage> {
     };
     var res = await http.post(url, body: data);
 
-    if (jsonDecode(res.body) == "true")
-      return true;
-    else if (jsonDecode(res.body) == "account not found") {
-      var snackBar = SnackBar(content: Text('account not found'));
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    if (jsonDecode(res.body) == "true") {
+      Navigator.of(ctx).pushNamed('/user');
+    } else if (jsonDecode(res.body) == "false") {
+      show_wrong_password();
+    } else {
+      show_account_not_found();
     }
-    return false;
+  }
+
+  void show_account_not_found() {
+    var snackBar = SnackBar(content: Text('Account not found'));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void show_wrong_password() {
+    var snackBar = SnackBar(content: Text('Wrong Password'));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   void verify_and_move(BuildContext ctx) async {
-    bool check = await verify_signin();
-    if (check) {
-      if (dropdownValue == 'Admin')
+    int check;
+    if (dropdownValue == 'Admin') {
+      if (idcontroller.text == '11111' && passcontroller.text == 'password') {
         Navigator.of(ctx).pushNamed('/admin');
-      else
-        Navigator.of(ctx).pushNamed('/user');
+      } else if (idcontroller.text != '11111') {
+        show_account_not_found();
+      } else {
+        show_wrong_password();
+      }
     } else {
-      var snackBar = SnackBar(content: Text('Wrong id or password'));
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      await verify_signin(ctx);
     }
   }
 
@@ -100,7 +110,6 @@ class _loginpageState extends State<loginpage> {
                       margin: EdgeInsets.all(10),
                       child: TextField(
                         controller: idcontroller,
-                        obscureText: true,
                         decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(30.0),
