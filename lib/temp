@@ -1,4 +1,4 @@
-Column(
+/*Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               Row(
@@ -100,4 +100,4 @@ Column(
               ),
             ],
           )),
-    );
+    );*/
