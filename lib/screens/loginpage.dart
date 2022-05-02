@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jzclean/main.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class loginpage extends StatefulWidget {
   @override
@@ -31,13 +32,21 @@ class _loginpageState extends State<loginpage> {
   }
 
   void show_account_not_found() {
-    var snackBar = SnackBar(content: Text('Account not found'));
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    Fluttertoast.showToast(
+      msg: "Account not found",
+      backgroundColor: Colors.grey,
+      fontSize: 15,
+      gravity: ToastGravity.CENTER,
+    );
   }
 
   void show_wrong_password() {
-    var snackBar = SnackBar(content: Text('Wrong Password'));
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    Fluttertoast.showToast(
+      msg: "Wrong password",
+      backgroundColor: Colors.grey,
+      fontSize: 15,
+      gravity: ToastGravity.CENTER,
+    );
   }
 
   void verify_and_move(BuildContext ctx) async {

@@ -1,5 +1,8 @@
+import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 
 class user_complaints extends StatefulWidget {
   @override
@@ -8,8 +11,30 @@ class user_complaints extends StatefulWidget {
 
 class _user_complaintsState extends State<user_complaints> {
   String dropdownValue = '--Please choose an option--';
+  TextEditingController roomnumber = TextEditingController();
+  TextEditingController description = TextEditingController();
   TextEditingController dateinput = TextEditingController();
   TextEditingController timeinput = TextEditingController();
+  Future sendData() async {
+    final url =
+        Uri.parse("http://austrian-expert.000webhostapp.com/insComplaint.php");
+    var data = {
+      "domain": dropdownValue,
+      "roomInfo": roomnumber.text,
+      "time": dateinput.text + " " + timeinput.text,
+      "desc": description.text
+    };
+    var res = await http.post(url, body: data);
+    if (jsonDecode(res.body) != "false") {
+      Fluttertoast.showToast(
+        msg: "Your complaint id is " + jsonDecode(res.body),
+        backgroundColor: Colors.grey,
+        fontSize: 20,
+        gravity: ToastGravity.CENTER,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -62,6 +87,7 @@ class _user_complaintsState extends State<user_complaints> {
                 decoration:
                     BoxDecoration(border: Border.all(color: Colors.blue)),
                 child: TextField(
+                  controller: roomnumber,
                   decoration: InputDecoration(
                       icon: Icon(
                         Icons.room_sharp,
@@ -176,12 +202,15 @@ class _user_complaintsState extends State<user_complaints> {
                       );
 
                       if (pickedTime != null) {
-                        print(pickedTime.format(context)); //output 10:51 PM
+                        print(pickedTime);
+
+                        print(pickedTime.format(context) +
+                            ":00"); //output 10:51 PM
                         //DateFormat() is from intl package, you can format the time on any pattern you need.
 
                         setState(() {
-                          timeinput.text = pickedTime
-                              .format(context); //set the value of text field.
+                          timeinput.text = pickedTime.format(context) +
+                              ":00"; //set the value of text field.
                         });
                       } else {
                         print("Time is not selected");
@@ -198,6 +227,7 @@ class _user_complaintsState extends State<user_complaints> {
                     maxHeight: 300.0,
                   ),
                   child: TextField(
+                    controller: description,
                     maxLines: null,
                     decoration: InputDecoration(
                         enabledBorder: UnderlineInputBorder(
@@ -223,7 +253,7 @@ class _user_complaintsState extends State<user_complaints> {
                   width: double.maxFinite,
                   height: 60.0,
                   child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: sendData,
                       child: Text(
                         'Submit',
                         style: TextStyle(fontSize: 20),

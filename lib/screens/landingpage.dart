@@ -51,7 +51,7 @@ class landingpage extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30.0),
                       border: Border.all(color: Colors.white, width: 2.0)),
-                  child: Text('Let\'s go',
+                  child: Text('Get Started',
                       style: TextStyle(
                           fontSize: 30.0,
                           color: Colors.white,
