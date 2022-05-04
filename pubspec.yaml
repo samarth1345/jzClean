@@ -31,6 +31,7 @@ dependencies:
   flutter_easyloading: ^3.0.3
   intl: ^0.17.0
   fluttertoast: ^8.0.9
+  reviews_slider: ^2.0.0
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './user_complaints.dart';
 import './user_resolve.dart';
+import './drawer.dart';
 
 class user_page extends StatefulWidget {
   @override
@@ -13,6 +14,7 @@ class _user_pageState extends State<user_page> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        drawer: Drawer(child: drawer()),
         appBar: AppBar(
             title: Text('User_Page'),
             bottom: TabBar(tabs: <Widget>[
