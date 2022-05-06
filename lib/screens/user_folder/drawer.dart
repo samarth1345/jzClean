@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class drawer extends StatelessWidget {
-  Widget buildtile(String title, IconData iconData) {
+  Widget buildtile(String title, IconData iconData, String navigation,
+      BuildContext context, String argument) {
     return ListTile(
       leading: Icon(
         iconData,
@@ -12,7 +13,9 @@ class drawer extends StatelessWidget {
         title,
         style: TextStyle(fontSize: 22, color: Colors.blue),
       ),
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).pushNamed(navigation, arguments: argument);
+      },
     );
   }
 
@@ -44,15 +47,17 @@ class drawer extends StatelessWidget {
         SizedBox(
           height: 20,
         ),
-        buildtile('Active Complaints', Icons.indeterminate_check_box_outlined),
+        buildtile('Active Complaints', Icons.indeterminate_check_box_outlined,
+            "/history", context, "active"),
         SizedBox(
           height: 20,
         ),
-        buildtile('Resolved Complaints', Icons.check_box),
+        buildtile('Resolved Complaints', Icons.check_box, "/history", context,
+            "resolved"),
         SizedBox(
           height: 20,
         ),
-        buildtile('Settings', Icons.settings)
+        buildtile('Settings', Icons.settings, "/settings", context, "none")
       ],
     );
   }

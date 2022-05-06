@@ -6,10 +6,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class loginpage extends StatefulWidget {
   @override
-  _loginpageState createState() => _loginpageState();
+  loginpageState createState() => loginpageState();
 }
 
-class _loginpageState extends State<loginpage> {
+class loginpageState extends State<loginpage> {
   String dropdownValue = 'Select login type';
   TextEditingController idcontroller = new TextEditingController();
   TextEditingController passcontroller = new TextEditingController();
