@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:jzclean/main.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class loginpage extends StatefulWidget {
   @override
@@ -21,7 +21,8 @@ class loginpageState extends State<loginpage> {
       "pass": passcontroller.text,
     };
     var res = await http.post(url, body: data);
-
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('user_id', idcontroller.text.toString());
     if (jsonDecode(res.body) == "true") {
       Navigator.of(ctx).pushNamed('/user');
     } else if (jsonDecode(res.body) == "false") {

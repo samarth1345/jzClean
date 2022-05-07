@@ -1,9 +1,9 @@
 import 'dart:convert';
-import '../loginpage.dart';
 import 'package:flutter/material.dart';
 import 'package:jzclean/models/user_complaints.dart';
 import 'package:jzclean/screens/user_folder/widgets/complaints_card.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class history extends StatefulWidget {
   @override
@@ -22,8 +22,11 @@ class _historyState extends State<history> {
     else
       url = Uri.parse(
           "http://austrian-expert.000webhostapp.com/resolved_comp_history.php");
+    final prefs = await SharedPreferences.getInstance();
+    final String? user_id = prefs.getString('user_id');
+    print(user_id);
     var data = {
-      "rollNo": "102003180",
+      "rollNo": user_id,
     };
     var res = await http.post(url, body: data);
     if (res.statusCode == 200) {
