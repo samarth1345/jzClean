@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:jzclean/screens/landingpage.dart';
-import 'package:jzclean/screens/loginpage.dart';
+import 'package:jzclean/screens/main/landingpage.dart';
+import 'package:jzclean/screens/main/loginpage.dart';
 import 'package:jzclean/screens/user_folder/history.dart';
-import 'package:jzclean/screens/user_folder/user_resolve.dart';
-import 'package:jzclean/settings.dart';
+import 'package:jzclean/screens/user_folder/widgets/user_resolve.dart';
+import 'package:jzclean/screens/user_folder/settings.dart';
 import 'screens/user_folder/user.dart';
 import 'screens/admin_folder/admin.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import './user_complaints.dart';
-import './user_resolve.dart';
-import './drawer.dart';
+import 'widgets/user_complaints.dart';
+import 'widgets/user_resolve.dart';
+import 'widgets/drawer.dart';
 
 class user_page extends StatefulWidget {
   @override
@@ -14,6 +14,8 @@ class _user_pageState extends State<user_page> {
     final args = (ModalRoute.of(context)?.settings.arguments ??
         <String, String>{}) as Map;
     int index;
+    //if request has come from active complaints page we would have a
+    //complaint id with it else we would have send a null from any other page
     String comp_id = "null";
     if (args['index'] == "1") {
       index = 1;
