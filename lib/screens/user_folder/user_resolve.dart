@@ -5,6 +5,9 @@ import 'package:reviews_slider/reviews_slider.dart';
 import 'package:http/http.dart' as http;
 
 class user_resolve extends StatefulWidget {
+  final String comp_id;
+  const user_resolve({Key? key, required this.comp_id}) : super(key: key);
+
   @override
   State<user_resolve> createState() => _user_resolveState();
 }
@@ -26,11 +29,11 @@ class _user_resolveState extends State<user_resolve> {
       "feedback": selectedValue1.toString(),
     };
     var res = await http.post(url, body: data);
-    print(jsonDecode(res.body));
   }
 
   @override
   Widget build(BuildContext context) {
+    print(widget.comp_id);
     return SingleChildScrollView(
       child: Card(
         child: Column(
@@ -41,7 +44,8 @@ class _user_resolveState extends State<user_resolve> {
               margin: EdgeInsets.all(20),
               decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
               child: TextField(
-                controller: compid,
+                controller: compid
+                  ..text = widget.comp_id != "null" ? widget.comp_id : "",
                 decoration: InputDecoration(
                     icon: Icon(
                       Icons.numbers,

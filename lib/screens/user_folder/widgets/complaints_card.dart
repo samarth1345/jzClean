@@ -67,7 +67,13 @@ class complaints_card extends StatelessWidget {
                             'Resolve',
                             style: CustomTextStyle._textStyle2(),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushNamed('/user', arguments: {
+                              'index': '1',
+                              'comp_id': comp_id,
+                            });
+                          },
                         ),
                       )
                     : SizedBox(

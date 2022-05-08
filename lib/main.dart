@@ -3,6 +3,7 @@ import 'package:jzclean/screens/landingpage.dart';
 import 'package:jzclean/screens/loginpage.dart';
 import 'package:jzclean/screens/user_folder/drawer.dart';
 import 'package:jzclean/screens/user_folder/history.dart';
+import 'package:jzclean/screens/user_folder/user_resolve.dart';
 import 'package:jzclean/settings.dart';
 import 'screens/user_folder/user.dart';
 import 'screens/admin_folder/admin.dart';
@@ -35,6 +36,9 @@ class MyApp extends StatelessWidget {
         '/loginpage': (ctx) => loginpage(),
         '/history': (ctx) => history(),
         '/settings': (ctx) => settings(),
+        'user_resolve': (ctx) => user_resolve(
+              comp_id: "null",
+            ),
       },
     );
   }

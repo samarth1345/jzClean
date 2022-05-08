@@ -11,7 +11,17 @@ class user_page extends StatefulWidget {
 class _user_pageState extends State<user_page> {
   @override
   Widget build(BuildContext context) {
+    final args = (ModalRoute.of(context)?.settings.arguments ??
+        <String, String>{}) as Map;
+    int index;
+    String comp_id = "null";
+    if (args['index'] == "1") {
+      index = 1;
+      comp_id = args['comp_id'];
+    } else
+      index = 0;
     return DefaultTabController(
+      initialIndex: index,
       length: 2,
       child: Scaffold(
         drawer: Drawer(child: drawer()),
@@ -27,7 +37,10 @@ class _user_pageState extends State<user_page> {
                 text: 'Resolve',
               )
             ])),
-        body: TabBarView(children: <Widget>[user_complaints(), user_resolve()]),
+        body: TabBarView(children: <Widget>[
+          user_complaints(),
+          user_resolve(comp_id: comp_id)
+        ]),
       ),
     );
   }
