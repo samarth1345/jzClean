@@ -5,6 +5,7 @@ import 'package:reviews_slider/reviews_slider.dart';
 import 'package:http/http.dart' as http;
 
 class user_resolve extends StatefulWidget {
+  //we are getting this to autofill complaint id if we get one!
   final String comp_id;
   const user_resolve({Key? key, required this.comp_id}) : super(key: key);
 
@@ -44,6 +45,7 @@ class _user_resolveState extends State<user_resolve> {
               margin: EdgeInsets.all(20),
               decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
               child: TextField(
+                //if we have a complaint id before we will just fill it
                 controller: compid
                   ..text = widget.comp_id != "null" ? widget.comp_id : "",
                 decoration: InputDecoration(
