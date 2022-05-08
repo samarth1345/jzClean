@@ -13,9 +13,10 @@ class loginpageState extends State<loginpage> {
   String dropdownValue = '----Select login type----';
   TextEditingController idcontroller = new TextEditingController();
   TextEditingController passcontroller = new TextEditingController();
-  bool loading = true;
   bool showpassword = true;
   IconData icondata = Icons.remove_red_eye;
+  bool _validate_id = false;
+  bool _validate_pswd = false;
   void resetData() {
     setState(() {
       dropdownValue = '----Select login type----';
@@ -76,16 +77,24 @@ class loginpageState extends State<loginpage> {
 
   void verify_and_move(BuildContext ctx) async {
     int check;
-    if (dropdownValue == 'Admin') {
-      if (idcontroller.text == '11111' && passcontroller.text == 'password') {
-        Navigator.of(ctx).pushNamed('/admin');
-      } else if (idcontroller.text != '11111') {
-        show_account_not_found();
+    setState(() {
+      idcontroller.text.isEmpty ? _validate_id = true : _validate_id = false;
+      passcontroller.text.isEmpty
+          ? _validate_pswd = true
+          : _validate_pswd = false;
+    });
+    if (_validate_id == false && _validate_pswd == false) {
+      if (dropdownValue == 'Admin') {
+        if (idcontroller.text == '11111' && passcontroller.text == 'password') {
+          Navigator.of(ctx).pushNamed('/admin');
+        } else if (idcontroller.text != '11111') {
+          show_account_not_found();
+        } else {
+          show_wrong_password();
+        }
       } else {
-        show_wrong_password();
+        await verify_signin(ctx);
       }
-    } else {
-      await verify_signin(ctx);
     }
   }
 
@@ -118,11 +127,11 @@ class loginpageState extends State<loginpage> {
                           borderRadius: BorderRadius.circular(15)),
                       padding: EdgeInsets.all(5),
                       margin: EdgeInsets.all(20),
-                      alignment: AlignmentDirectional.center,
                       width: double.maxFinite,
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton<String>(
                           isExpanded: true,
+                          alignment: AlignmentDirectional.center,
                           style:
                               const TextStyle(color: Colors.blue, fontSize: 20),
                           hint: Text(
@@ -157,20 +166,22 @@ class loginpageState extends State<loginpage> {
                       child: TextField(
                         controller: idcontroller,
                         decoration: InputDecoration(
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue),
-                            ),
-                            border: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue),
-                            ),
-                            labelText: 'User id',
-                            labelStyle: TextStyle(
-                              color: Colors.blue,
-                              fontSize: 20,
-                            )),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blue),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blue),
+                          ),
+                          border: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blue),
+                          ),
+                          labelText: 'User id',
+                          labelStyle: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 20,
+                          ),
+                          errorText: _validate_id ? 'Id is needed' : null,
+                        ),
                       ),
                     ),
                     Container(
@@ -185,35 +196,38 @@ class loginpageState extends State<loginpage> {
                             TextStyle(color: Color.fromARGB(255, 48, 46, 46)),
                         obscureText: showpassword,
                         decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  showpassword = !showpassword;
-                                  if (showpassword == true)
-                                    icondata = Icons.remove_red_eye;
-                                  else
-                                    icondata = Icons.visibility_off;
-                                });
-                              },
-                              icon: Icon(
-                                icondata,
-                                color: Colors.blue,
-                              ),
-                            ),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue),
-                            ),
-                            border: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue),
-                            ),
-                            labelText: 'password',
-                            labelStyle: TextStyle(
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                showpassword = !showpassword;
+                                if (showpassword == true)
+                                  icondata = Icons.remove_red_eye;
+                                else
+                                  icondata = Icons.visibility_off;
+                              });
+                            },
+                            icon: Icon(
+                              icondata,
                               color: Colors.blue,
-                              fontSize: 20,
-                            )),
+                            ),
+                          ),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blue),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blue),
+                          ),
+                          border: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blue),
+                          ),
+                          labelText: 'password',
+                          labelStyle: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 20,
+                          ),
+                          errorText:
+                              _validate_pswd ? 'Password is needed' : null,
+                        ),
                       ),
                     ),
                     Container(
@@ -222,7 +236,7 @@ class loginpageState extends State<loginpage> {
                         width: double.maxFinite,
                         height: 60.0,
                         child: ElevatedButton(
-                            onPressed: () => verify_signin(context),
+                            onPressed: () => verify_and_move(context),
                             child: Text(
                               'Submit',
                               style: TextStyle(fontSize: 20),

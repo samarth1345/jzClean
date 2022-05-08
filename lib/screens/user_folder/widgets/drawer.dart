@@ -22,18 +22,19 @@ class drawer extends StatelessWidget {
             ),
       title: Text(
         title,
-        style: TextStyle(fontSize: 22, color: Colors.blue),
+        style: TextStyle(fontSize: 18, color: Colors.blue),
       ),
       onTap: () {
         Navigator.pop(context);
         title != 'Logout'
             ? Navigator.of(context).pushNamed(navigation, arguments: argument)
-            : Navigator.of(context).pushReplacementNamed(navigation);
+            : Navigator.of(context).pushNamedAndRemoveUntil(
+                '/loginpage', (Route<dynamic> route) => false);
       },
       trailing: title != 'Logout'
           ? Icon(
               Icons.arrow_forward,
-              size: 30,
+              size: 25,
               color: Colors.blue,
             )
           : SizedBox(),
@@ -61,7 +62,9 @@ class drawer extends StatelessWidget {
                   style: TextStyle(color: Colors.red, fontSize: 15),
                 ),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pushNamed('/profile');
+              },
             )
           ],
         ),

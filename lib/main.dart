@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jzclean/screens/main/landingpage.dart';
 import 'package:jzclean/screens/main/loginpage.dart';
 import 'package:jzclean/screens/user_folder/history.dart';
+import 'package:jzclean/screens/user_folder/profile_page.dart';
 import 'package:jzclean/screens/user_folder/widgets/user_resolve.dart';
 import 'package:jzclean/screens/user_folder/settings.dart';
 import 'screens/user_folder/user.dart';
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
         '/loginpage': (ctx) => loginpage(),
         '/history': (ctx) => history(),
         '/settings': (ctx) => settings(),
+        '/profile': (ctx) => profile(),
         //we are not sending any complaint id at the start
         'user_resolve': (ctx) => user_resolve(
               comp_id: "null",

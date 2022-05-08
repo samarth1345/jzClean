@@ -24,7 +24,6 @@ class _historyState extends State<history> {
           "http://austrian-expert.000webhostapp.com/resolved_comp_history.php");
     final prefs = await SharedPreferences.getInstance();
     final String? user_id = prefs.getString('user_id');
-    print(user_id);
     var data = {
       "rollNo": user_id,
     };
