@@ -22,6 +22,13 @@ class _user_resolveState extends State<user_resolve> {
     });
   }
 
+  void resetData() {
+    setState(() {
+      selectedValue1 = 1;
+      compid..text = "";
+    });
+  }
+
   Future senddata() async {
     final url =
         Uri.parse("http://austrian-expert.000webhostapp.com/comp_resolve.php");
@@ -30,6 +37,19 @@ class _user_resolveState extends State<user_resolve> {
       "feedback": selectedValue1.toString(),
     };
     var res = await http.post(url, body: data);
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        content: Text(jsonDecode(res.body).toString()),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'OK'),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+    if (jsonDecode(res.body) == "complaint resolved") resetData();
   }
 
   @override

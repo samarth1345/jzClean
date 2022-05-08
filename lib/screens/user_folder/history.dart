@@ -49,19 +49,23 @@ class _historyState extends State<history> {
       appBar: AppBar(title: Text('Complaints')),
       body: loading
           ? Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: complaints.length,
-              itemBuilder: ((context, index) {
-                final nDataList = complaints[index];
-                return complaints_card(
-                  is_active: args.toString() == "active",
-                  comp_id: nDataList.complaint_id,
-                  type: nDataList.domain,
-                  date: nDataList.date,
-                  Room_no: nDataList.room_no,
-                );
-              }),
-            ),
+          : (complaints.length > 0
+              ? (ListView.builder(
+                  itemCount: complaints.length,
+                  itemBuilder: ((context, index) {
+                    final nDataList = complaints[index];
+                    return complaints_card(
+                      is_active: args.toString() == "active",
+                      comp_id: nDataList.complaint_id,
+                      type: nDataList.domain,
+                      date: nDataList.date,
+                      Room_no: nDataList.room_no,
+                    );
+                  }),
+                ))
+              : Center(
+                  child: Text('OOPS there are no complaints'),
+                )),
     );
   }
 }

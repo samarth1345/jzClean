@@ -15,6 +15,16 @@ class _user_complaintsState extends State<user_complaints> {
   TextEditingController description = TextEditingController();
   TextEditingController dateinput = TextEditingController();
   TextEditingController timeinput = TextEditingController();
+  void resetData() {
+    setState(() {
+      roomnumber..text = "";
+      description..text = "";
+      dateinput..text = "";
+      timeinput..text = "";
+      dropdownValue = '--Please choose an option--';
+    });
+  }
+
   Future sendData() async {
     final url =
         Uri.parse("http://austrian-expert.000webhostapp.com/insComplaint.php");
@@ -26,11 +36,31 @@ class _user_complaintsState extends State<user_complaints> {
     };
     var res = await http.post(url, body: data);
     if (jsonDecode(res.body) != "false") {
-      Fluttertoast.showToast(
-        msg: "Your complaint id is " + jsonDecode(res.body),
-        backgroundColor: Colors.grey,
-        fontSize: 20,
-        gravity: ToastGravity.CENTER,
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          content: Text('Your complaint id is ' + jsonDecode(res.body)),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'OK'),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+      resetData();
+    } else {
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          content: const Text('Try again later'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'OK'),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
       );
     }
   }

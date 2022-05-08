@@ -10,9 +10,20 @@ class loginpage extends StatefulWidget {
 }
 
 class loginpageState extends State<loginpage> {
-  String dropdownValue = 'Select login type';
+  String dropdownValue = '----Select login type----';
   TextEditingController idcontroller = new TextEditingController();
   TextEditingController passcontroller = new TextEditingController();
+  bool loading = true;
+  bool showpassword = true;
+  IconData icondata = Icons.remove_red_eye;
+  void resetData() {
+    setState(() {
+      dropdownValue = '----Select login type----';
+      idcontroller..text = "";
+      passcontroller.text = "";
+    });
+  }
+
   Future verify_signin(BuildContext ctx) async {
     final url =
         Uri.parse("http://austrian-expert.000webhostapp.com/verifylogin.php");
@@ -24,6 +35,7 @@ class loginpageState extends State<loginpage> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('user_id', idcontroller.text.toString());
     if (jsonDecode(res.body) == "true") {
+      resetData();
       Navigator.of(ctx).pushNamed('/user');
     } else if (jsonDecode(res.body) == "false") {
       show_wrong_password();
@@ -33,20 +45,32 @@ class loginpageState extends State<loginpage> {
   }
 
   void show_account_not_found() {
-    Fluttertoast.showToast(
-      msg: "Account not found",
-      backgroundColor: Colors.grey,
-      fontSize: 15,
-      gravity: ToastGravity.CENTER,
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        content: const Text('Account not found'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'OK'),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
     );
   }
 
   void show_wrong_password() {
-    Fluttertoast.showToast(
-      msg: "Wrong password",
-      backgroundColor: Colors.grey,
-      fontSize: 15,
-      gravity: ToastGravity.CENTER,
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        content: const Text('Wrong password'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'OK'),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
     );
   }
 
@@ -79,7 +103,8 @@ class loginpageState extends State<loginpage> {
             children: [
               Icon(
                 Icons.account_circle,
-                size: 200,
+                size: 150,
+                color: Colors.blue,
               ),
               Card(
                 color: Colors.white,
@@ -88,84 +113,119 @@ class loginpageState extends State<loginpage> {
                 child: Column(
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.all(10),
-                      child: DropdownButton<String>(
-                        style:
-                            const TextStyle(color: Colors.black, fontSize: 20),
-                        hint: Text(
-                          dropdownValue,
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 48, 46, 46),
-                              fontSize: 20),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.blue),
+                          borderRadius: BorderRadius.circular(15)),
+                      padding: EdgeInsets.all(5),
+                      margin: EdgeInsets.all(20),
+                      alignment: AlignmentDirectional.center,
+                      width: double.maxFinite,
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          isExpanded: true,
+                          style:
+                              const TextStyle(color: Colors.blue, fontSize: 20),
+                          hint: Text(
+                            dropdownValue,
+                            style: TextStyle(color: Colors.blue, fontSize: 20),
+                          ),
+                          icon: Icon(
+                            Icons.arrow_drop_down,
+                            color: Colors.blue,
+                            size: 30.0,
+                          ),
+                          items: <String>['Admin', 'User'].map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              dropdownValue = newValue!;
+                            });
+                          },
                         ),
-                        icon: Icon(
-                          Icons.arrow_drop_down,
-                          color: Color.fromARGB(255, 48, 46, 46),
-                          size: 30.0,
-                        ),
-                        items: <String>['Admin', 'User'].map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            dropdownValue = newValue!;
-                          });
-                        },
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.all(10),
+                      padding: EdgeInsets.all(5),
+                      margin: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.blue),
+                          borderRadius: BorderRadius.circular(15)),
                       child: TextField(
                         controller: idcontroller,
                         decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30.0),
-                                borderSide: BorderSide(
-                                    color: Color.fromARGB(255, 48, 46, 46))),
-                            border: OutlineInputBorder(),
-                            labelText: 'Id',
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blue),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blue),
+                            ),
+                            border: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blue),
+                            ),
+                            labelText: 'User id',
                             labelStyle: TextStyle(
-                                color: Color.fromARGB(255, 75, 72, 72))),
+                              color: Colors.blue,
+                              fontSize: 20,
+                            )),
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.all(10),
+                      padding: EdgeInsets.all(5),
+                      margin: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.blue),
+                          borderRadius: BorderRadius.circular(15)),
                       child: TextField(
                         controller: passcontroller,
                         style:
                             TextStyle(color: Color.fromARGB(255, 48, 46, 46)),
-                        obscureText: true,
+                        obscureText: showpassword,
                         decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30.0),
-                                borderSide: BorderSide(
-                                    color: Color.fromARGB(255, 48, 46, 46))),
-                            border: OutlineInputBorder(),
-                            labelText: 'Password',
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  showpassword = !showpassword;
+                                  if (showpassword == true)
+                                    icondata = Icons.remove_red_eye;
+                                  else
+                                    icondata = Icons.visibility_off;
+                                });
+                              },
+                              icon: Icon(
+                                icondata,
+                                color: Colors.blue,
+                              ),
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blue),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blue),
+                            ),
+                            border: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blue),
+                            ),
+                            labelText: 'password',
                             labelStyle: TextStyle(
-                                color: Color.fromARGB(255, 75, 72, 72))),
+                              color: Colors.blue,
+                              fontSize: 20,
+                            )),
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.all(10),
-                      child: InkWell(
-                        onTap: () => verify_and_move(context),
-                        child: Container(
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30.0),
-                                border: Border.all(
-                                    color: Color.fromARGB(255, 48, 46, 46),
-                                    width: 2.0)),
+                      margin: EdgeInsets.all(20),
+                      child: SizedBox(
+                        width: double.maxFinite,
+                        height: 60.0,
+                        child: ElevatedButton(
+                            onPressed: () => verify_signin(context),
                             child: Text(
                               'Submit',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 48, 46, 46),
-                                fontSize: 20,
-                              ),
+                              style: TextStyle(fontSize: 20),
                             )),
                       ),
                     )
