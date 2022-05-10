@@ -24,7 +24,7 @@ class _profileState extends State<profile> {
       leading: Icon(
         iconData,
         size: 35,
-        color: Colors.blue,
+        color: Color.fromARGB(255, 19, 19, 19),
       ),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,16 +32,22 @@ class _profileState extends State<profile> {
           Text(
             title,
             style: TextStyle(
-                fontSize: 22, color: Colors.blue, fontWeight: FontWeight.bold),
+                fontSize: 20,
+                color: Color.fromARGB(255, 19, 19, 19),
+                fontWeight: FontWeight.bold),
           ),
           Text(
             data,
-            style: TextStyle(fontSize: 15, color: Colors.blue),
+            style: TextStyle(fontSize: 17, color: Colors.black87),
           ),
         ],
       ),
       onTap: () {},
     );
+  }
+
+  void modifyurl() {
+    profileurl.replaceAll('\\', '');
   }
 
   Future<void> getdata() async {
@@ -55,6 +61,8 @@ class _profileState extends State<profile> {
     if (res.statusCode == 200) {
       final data = jsonDecode(res.body);
       profileurl = data["profileLink"];
+      modifyurl();
+      print(profileurl);
       name = data["name"];
       DOB = data["dob"];
       hostel = data["roomType"];
@@ -74,71 +82,73 @@ class _profileState extends State<profile> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Edit profile')),
-      body: loading == true
-          ? Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
-              child: Container(
-                  padding: EdgeInsets.all(10),
-                  width: double.maxFinite,
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                          colors: [
-                        Colors.blue,
-                        Color.fromARGB(255, 238, 136, 129)
-                      ])),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Container(
-                        constraints: BoxConstraints(
-                          maxHeight: 200,
-                          maxWidth: 200,
+    return Container(
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [Colors.blue, Color.fromARGB(255, 238, 136, 129)])),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          title: Text('Edit profile'),
+          backgroundColor: Colors.transparent,
+        ),
+        body: loading == true
+            ? Center(child: CircularProgressIndicator())
+            : SingleChildScrollView(
+                child: Container(
+                    padding: EdgeInsets.all(10),
+                    width: double.maxFinite,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Container(
+                          constraints: BoxConstraints(
+                            maxHeight: 200,
+                            maxWidth: 200,
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(300),
+                            child: Image.network(profileurl),
+                          ),
                         ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(300),
-                          child: Image.network(
-                              "https://i.ibb.co\/kQMgRYK\/Whats-App-Image-2022-05-06-at-11-19-29-PM.jpg"),
-                        ),
-                      ),
-                      Container(
-                          width: double.maxFinite,
-                          child: Card(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Container(
-                                  margin: EdgeInsets.only(left: 10.0),
-                                  child: Text(
-                                    'Account Info',
-                                    style: TextStyle(
-                                        fontSize: 35,
-                                        color: Colors.blue,
-                                        fontWeight: FontWeight.bold),
+                        Container(
+                            width: double.maxFinite,
+                            child: Card(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Container(
+                                    margin: EdgeInsets.only(left: 10.0),
+                                    child: Text(
+                                      'Account Info',
+                                      style: TextStyle(
+                                          fontSize: 35,
+                                          color: Colors.black87,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                buildtile(name, Icons.verified_user, "Name"),
-                                buildtile(hostel, Icons.house_outlined,
-                                    "Hostel type"),
-                                buildtile(room_no, Icons.room, "Room_no"),
-                                buildtile(DOB, Icons.date_range, "DOB"),
-                                buildtile(
-                                  user_id as String,
-                                  Icons.info_outlined,
-                                  "User_id",
-                                )
-                              ],
-                            ),
-                          ))
-                    ],
-                  )),
-            ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  buildtile(name, Icons.verified_user, "Name"),
+                                  buildtile(hostel, Icons.house_outlined,
+                                      "Hostel type"),
+                                  buildtile(room_no, Icons.room, "Room_no"),
+                                  buildtile(DOB, Icons.date_range, "DOB"),
+                                  buildtile(
+                                    user_id as String,
+                                    Icons.info_outlined,
+                                    "User_id",
+                                  )
+                                ],
+                              ),
+                            ))
+                      ],
+                    )),
+              ),
+      ),
     );
   }
 }

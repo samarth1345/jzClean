@@ -44,13 +44,14 @@ class landingpage extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            InkWell(
+            GestureDetector(
               onTap: () => move_to_loginpage(context),
               child: Container(
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30.0),
-                      border: Border.all(color: Colors.white, width: 2.0)),
+                    borderRadius: BorderRadius.circular(30.0),
+                    border: Border.all(color: Colors.white, width: 2.0),
+                  ),
                   child: Text('Get Started',
                       style: TextStyle(
                           fontSize: 30.0,
