@@ -13,12 +13,21 @@ class admin extends StatefulWidget {
 class _adminState extends State<admin> {
   PageController _myPage = PageController(initialPage: 0);
   List<bool> arr = [true, false, false, false, false];
+  List<String> appbar = [
+    'Home',
+    'Maintainence',
+    'Add Staff',
+    'Mess',
+    'Cleaning'
+  ];
   int prev_index = 0;
+  String apptitle = 'Home';
   void onTap(int idx) {
     setState(() {
       arr[prev_index] = false;
       arr[idx] = true;
       prev_index = idx;
+      apptitle = appbar[idx];
       _myPage.jumpToPage(idx);
     });
   }
@@ -27,7 +36,7 @@ class _adminState extends State<admin> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Admin '),
+        title: Text(apptitle),
         backgroundColor: Color(0xff6D28D9),
       ),
       bottomNavigationBar: Container(

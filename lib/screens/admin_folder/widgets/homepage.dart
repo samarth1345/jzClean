@@ -131,47 +131,61 @@ class _homepageState extends State<homepage> {
       child: Container(
         padding: EdgeInsets.all(10),
         child: Column(children: [
-          Column(
-            children: [
-              Container(
-                width: double.maxFinite,
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      makecard(
-                          text: 'Active ',
-                          data: '100',
-                          icon: Icons.indeterminate_check_box,
-                          color1: Colors.amberAccent,
-                          color2: Colors.amber),
-                      makecard(
-                          text: 'Resolved',
-                          data: '100',
-                          icon: Icons.check_box,
-                          color1: Colors.purpleAccent,
-                          color2: Colors.purple),
+          Container(
+            child: Column(
+              children: [
+                Container(
+                  child: RichText(
+                    text: new TextSpan(children: <TextSpan>[
+                      new TextSpan(
+                          text: 'General  Data',
+                          style: TextStyle(
+                              fontSize: 30,
+                              color: Colors.black,
+                              fontFamily: 'Pacifico')),
                     ]),
-              ),
-              Container(
-                width: double.maxFinite,
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      makecard(
-                          text: 'Spending ',
-                          data: '10000',
-                          icon: Icons.currency_rupee,
-                          color1: Colors.blueAccent,
-                          color2: Colors.blue),
-                      makecard(
-                          text: 'Active ',
-                          data: '100',
-                          icon: Icons.check_box,
-                          color1: Colors.greenAccent,
-                          color2: Colors.green),
-                    ]),
-              )
-            ],
+                  ),
+                ),
+                Container(
+                  width: double.maxFinite,
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        makecard(
+                            text: 'Active ',
+                            data: '100',
+                            icon: Icons.indeterminate_check_box,
+                            color1: Colors.amberAccent,
+                            color2: Colors.amber),
+                        makecard(
+                            text: 'Resolved',
+                            data: '100',
+                            icon: Icons.check_box,
+                            color1: Colors.purpleAccent,
+                            color2: Colors.purple),
+                      ]),
+                ),
+                Container(
+                  width: double.maxFinite,
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        makecard(
+                            text: 'Spending ',
+                            data: '10000',
+                            icon: Icons.currency_rupee,
+                            color1: Colors.blueAccent,
+                            color2: Colors.blue),
+                        makecard(
+                            text: 'Active ',
+                            data: '100',
+                            icon: Icons.check_box,
+                            color1: Colors.greenAccent,
+                            color2: Colors.green),
+                      ]),
+                )
+              ],
+            ),
           ),
           SizedBox(
             height: 10,
@@ -179,6 +193,18 @@ class _homepageState extends State<homepage> {
           Divider(
             height: 5,
             color: Colors.black54,
+          ),
+          Container(
+            child: RichText(
+              text: new TextSpan(children: <TextSpan>[
+                new TextSpan(
+                    text: 'Recent  feedbacks',
+                    style: TextStyle(
+                        fontSize: 30,
+                        color: Colors.black,
+                        fontFamily: 'Pacifico')),
+              ]),
+            ),
           ),
           SizedBox(
             height: 15,
@@ -201,6 +227,18 @@ class _homepageState extends State<homepage> {
           Divider(
             height: 5,
             color: Colors.black54,
+          ),
+          Container(
+            child: RichText(
+              text: new TextSpan(children: <TextSpan>[
+                new TextSpan(
+                    text: 'Active Complaints breakup',
+                    style: TextStyle(
+                        fontSize: 30,
+                        color: Colors.black,
+                        fontFamily: 'Pacifico')),
+              ]),
+            ),
           ),
           SizedBox(
             height: 5,

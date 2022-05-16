@@ -3,28 +3,48 @@ import 'package:flutter/material.dart';
 
 class Add_staff extends StatelessWidget {
   TextEditingController inputController = new TextEditingController();
+  TextEditingController idController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: double.minPositive,
-      child: Card(
-        elevation: 10,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Nameinput(inputController: inputController),
-            SizedBox(
-              height: 10,
-            ),
-            SelectType(
-                initial_value: 'Mess',
-                values: ['Mess', 'AC Repair', 'Carpenter', 'Electricity']),
-            SizedBox(
-              height: 50,
-            ),
-            GradientButtonFb1(text: 'Submit', onPressed: () {})
-          ],
-        ),
+      decoration: BoxDecoration(
+        color: Colors.grey.withOpacity(0.2),
+      ),
+      padding: EdgeInsets.all(10),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 30,
+          ),
+          Nameinput(
+              inputController: inputController, hinttext: 'Enter Staff name'),
+          SizedBox(
+            height: 10,
+          ),
+          Nameinput(
+            inputController: idController,
+            hinttext: 'Enter Staff id',
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          SelectType(
+              initial_value: 'Mess',
+              values: ['Mess', 'AC Repair', 'Carpenter', 'Electricity']),
+          SizedBox(
+            height: 10,
+          ),
+          SelectType(initial_value: 'Member', values: [
+            'Member',
+            'Manager',
+            'Head',
+          ]),
+          SizedBox(
+            height: 50,
+          ),
+          GradientButtonFb1(text: 'Save', onPressed: () {})
+        ],
       ),
     );
   }
@@ -110,7 +130,7 @@ class _SelectTypeState extends State<SelectType> {
         dropdownPadding: null,
         dropdownDecoration: BoxDecoration(
           borderRadius: BorderRadius.circular(14),
-          color: Colors.white60,
+          color: Colors.white54,
         ),
         dropdownElevation: 8,
         scrollbarRadius: const Radius.circular(40),
@@ -156,7 +176,7 @@ class GradientButtonFb1 extends StatelessWidget {
           onPressed: onPressed,
           child: Text(
             text,
-            style: const TextStyle(color: accentColor, fontSize: 18),
+            style: const TextStyle(color: accentColor, fontSize: 22),
           ),
         ));
   }
@@ -164,7 +184,10 @@ class GradientButtonFb1 extends StatelessWidget {
 
 class Nameinput extends StatelessWidget {
   final TextEditingController inputController;
-  const Nameinput({Key? key, required this.inputController}) : super(key: key);
+  final String hinttext;
+  const Nameinput(
+      {Key? key, required this.inputController, required this.hinttext})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -177,16 +200,6 @@ class Nameinput extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "staff name",
-          style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.normal,
-              color: Colors.white.withOpacity(.9)),
-        ),
-        const SizedBox(
-          height: 8,
-        ),
         Container(
           height: 50,
           decoration: BoxDecoration(boxShadow: [
@@ -207,7 +220,7 @@ class Nameinput extends StatelessWidget {
               // prefixIcon: Icon(Icons.email),
               filled: true,
               fillColor: accentColor,
-              hintText: 'Enter Staff name',
+              hintText: hinttext,
               hintStyle: TextStyle(color: Colors.grey.withOpacity(.75)),
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
