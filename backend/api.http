@@ -1,0 +1,12 @@
+POST https://austrian-expert.000webhostapp.com/add_student.php HTTP/1.1
+
+Content-Type: application/json
+{
+  rollNo : "1111",
+  name :"Temp user",
+  roomNo :"B-222",
+  dues : "0",
+  roomType : "M-2020",
+  dob :"2002-06-22",
+  profileLink :"profileLink"
+}
